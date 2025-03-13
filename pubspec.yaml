@@ -10,21 +10,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  url_launcher: ^6.2.3  # Pastikan indentasi sejajar dengan dependensi lainnya
+  url_launcher: ^6.2.3
 
   # WebView dan plugin pendukung
   webview_flutter: ^4.7.0
   webview_flutter_android: ^3.10.0
   webview_flutter_wkwebview: ^3.10.0
 
-  # Google AdMob
-  google_mobile_ads: ^4.0.0
-
   # Cek koneksi internet
   connectivity_plus: ^6.0.3
-
-  # Splash screen (opsional)
-  flutter_native_splash: ^2.3.11
 
 dev_dependencies:
   flutter_test:
