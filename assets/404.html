@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline Screen - Modern</title>
+    <script type="module" src="https://unpkg.com/@material/web/all.js"></script>
+    <style>
+        :root {
+            --md-sys-color-primary: #1976D2;
+            --md-sys-color-primary-light: #64B5F6;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-background: #F1F5F9;
+            --md-sys-color-on-background: #000000;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
+            text-align: center;
+        }
+
+        .offline-container {
+            padding: 20px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 320px;
+        }
+
+        .offline-header {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 10px;
+        }
+
+        .offline-text {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .cool-button {
+            background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-primary-light));
+            color: white;
+            font-size: 16px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .cool-button:hover {
+            box-shadow: 0px 6px 15px rgba(100, 181, 246, 0.6);
+            transform: scale(1.05);
+        }
+
+        .cool-button:active {
+            transform: scale(0.95);
+        }
+
+        .spinner {
+            display: none;
+            border: 5px solid rgba(0, 0, 0, 0.1);
+            border-top: 5px solid var(--md-sys-color-primary);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 15px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-header">📡 No Internet</div>
+        <div class="offline-text">Check your connection and try again.</div>
+        <button class="cool-button" onclick="handleRetry()">Retry</button>
+        <div class="spinner" id="spinner"></div>
+    </div>
+
+    <script>
+        function handleRetry() {
+            const spinner = document.getElementById('spinner');
+            spinner.style.display = 'block';
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
