@@ -2,31 +2,21 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Import services.dart
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:url_launcher/url_launcher.dart'; // Import url_launcher
 
-import 'banner_ad_widget.dart';
-import 'interstitial_ad_manager.dart';
-import 'app_open_ad_manager.dart';
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  MobileAds.instance.initialize();
 
   // Set warna status bar dan bar navigasi
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarColor: Colors.purple, // Warna status bar ungu
+      statusBarColor: Color(0xFF8B5CF6), // Warna #8B5CF6
       statusBarIconBrightness: Brightness.light, // Ikon status bar putih
       systemNavigationBarColor: Colors.white, // Warna bar navigasi bawah putih
       systemNavigationBarIconBrightness: Brightness.dark, // Ikon bar navigasi bawah gelap
     ),
   );
-
-  // Inisialisasi dan muat App Open Ad
-  AppOpenAdManager().initialize();
-  InterstitialAdManager.loadAd();
 
   runApp(MyApp());
 }
@@ -36,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: WebViewScreen(),
+      home: WebViewScreen(), // Langsung ke halaman utama
     );
   }
 }
@@ -61,7 +51,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
             // Anda bisa menambahkan logika di sini jika diperlukan
           },
           onPageFinished: (_) {
-            InterstitialAdManager.showAd();
+            // Hapus baris berikut
+            // InterstitialAdManager.showAd();
           },
           onWebResourceError: (error) async {
             String htmlString = await rootBundle.loadString('assets/404.html');
@@ -87,10 +78,10 @@ class _WebViewScreenState extends State<WebViewScreen> {
       )
       ..loadRequest(Uri.parse('https://panelsystem.netlify.app/'));
 
-    // Tampilkan App Open Ad setelah 2 detik
-    Future.delayed(const Duration(seconds: 2), () {
-      AppOpenAdManager().showAdIfAvailable();
-    });
+    // Hapus baris berikut
+    // Future.delayed(const Duration(seconds: 2), () {
+    //   AppOpenAdManager().showAdIfAvailable();
+    // });
   }
 
   Future<void> _launchExternalBrowser(String url) async {
@@ -111,10 +102,10 @@ class _WebViewScreenState extends State<WebViewScreen> {
       appBar: AppBar(
         toolbarHeight: 0, // Sembunyikan AppBar
         elevation: 0, // Hilangkan shadow
-        backgroundColor: Colors.purple, // Sesuaikan dengan warna status bar
+        backgroundColor: Color(0xFF8B5CF6), // Warna #8B5CF6
       ),
       body: WebViewWidget(controller: _controller),
-      bottomNavigationBar: BannerAdWidget(),
+      // Hapus bottomNavigationBar: BannerAdWidget()
     );
   }
 }
