@@ -1,0 +1,81 @@
+name: Build Flutter Android App
+
+on:
+  workflow_dispatch:  # 🔹 Hanya berjalan secara manual
+
+jobs:
+  build-android:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: 🔧 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.6'  # Sesuaikan dengan Flutter terbaru
+          cache: true
+
+      - name: 🔧 Setup Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: 🔍 Verify Flutter & Dart Versions
+        run: |
+          flutter --version
+          dart --version
+
+      - name: 🚀 Upgrade Flutter & Reset Dependencies
+        run: |
+          flutter upgrade
+          flutter clean
+          rm -rf ~/.pub-cache
+          flutter pub get
+
+      - name: 🏗️ Generate `android/` Folder Jika Belum Ada
+        run: |
+          if [ ! -d "android" ]; then
+            echo "⚠️ Folder `android/` tidak ditemukan! Membuat ulang..."
+            flutter create --platforms=android .
+          else
+            echo "✅ Folder `android/` sudah ada."
+          fi
+
+      - name: 🔧 Set NDK Version di `android/local.properties`
+        run: |
+          mkdir -p android  # Pastikan folder ada
+          touch android/local.properties  # Buat file jika belum ada
+          echo "ndkVersion=27.0.12077973" >> android/local.properties
+
+      - name: 📦 Install Dependencies
+        run: flutter pub get
+
+      # ---- BUILD DEBUG ----
+      # - name: 🏗️ Build Android APK (Debug)
+      #   run: flutter build apk --debug
+
+      # - name: 📤 Upload Android APK (Debug)
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: flutter-apk-debug
+      #     path: build/app/outputs/flutter-apk/app-debug.apk
+
+      # ---- BUILD RELEASE ----
+      - name: 🏗️ Build Android APK (Release)
+        run: flutter build apk --release
+
+      - name: 📤 Upload Android APK (Release)
+        uses: actions/upload-artifact@v4
+        with:
+          name: flutter-apk-release
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      # ---- UPLOAD `android/` FOLDER AS ARTIFACT ----
+      - name: 📤 Upload `android/` Folder as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-folder
+          path: android/  # Pastikan tidak ada spasi di sini
