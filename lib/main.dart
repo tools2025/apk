@@ -95,7 +95,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
   Future<void> _launchExternalBrowser(String url) async {
     try {
       if (await canLaunch(url)) {
-        await launch(url);
+        await launch(url, forceSafariVC: false, forceWebView: false);
       } else {
         throw 'Could not launch $url';
       }
