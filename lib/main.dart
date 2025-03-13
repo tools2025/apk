@@ -65,12 +65,20 @@ class _WebViewScreenState extends State<WebViewScreen> {
             );
           },
           onNavigationRequest: (request) {
-            // Handle navigasi ke URL lain
-            if (request.url.startsWith('https://panelsystem.netlify.app/')) {
+            String url = request.url;
+            
+            // Jika URL adalah panelsystem.netlify.app
+            if (url.startsWith('https://panelsystem.netlify.app/')) {
               return NavigationDecision.navigate;
+            } 
+            // Jika URL adalah Telegram (t.me atau telegram.me)
+            else if (url.contains('t.me') || url.contains('telegram.me')) {
+              // Buka Telegram secara langsung
+              _launchExternalBrowser(url);
+              return NavigationDecision.prevent;
             } else {
-              // Buka URL di browser eksternal
-              _launchExternalBrowser(request.url);
+              // Buka URL lain di browser eksternal
+              _launchExternalBrowser(url);
               return NavigationDecision.prevent;
             }
           },
