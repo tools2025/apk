@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Import services.dart
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:url_launcher/url_launcher.dart'; // Import url_launcher
+import 'package:url_launcher/url_launcher.dart'; 
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,10 +11,10 @@ void main() {
   // Set warna status bar dan bar navigasi
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarColor: Color(0xFF8B5CF6), // Warna #8B5CF6
-      statusBarIconBrightness: Brightness.light, // Ikon status bar putih
-      systemNavigationBarColor: Colors.white, // Warna bar navigasi bawah putih
-      systemNavigationBarIconBrightness: Brightness.dark, // Ikon bar navigasi bawah gelap
+      statusBarColor: Color(0xFF8B5CF6), 
+      statusBarIconBrightness: Brightness.light, 
+      systemNavigationBarColor: Colors.white, 
+      systemNavigationBarIconBrightness: Brightness.dark,
     ),
   );
 
@@ -63,7 +63,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
           },
           onNavigationRequest: (request) {
             // Handle navigasi ke URL lain
-            if (request.url.startsWith('https://panelsystem.netlify.app/')) {
+            if (request.url.startsWith('https://coder8-33-63.vercel.app/')) {
               return NavigationDecision.navigate;
             } else {
               // Buka URL di browser eksternal
@@ -73,7 +73,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
           },
         ),
       )
-      ..loadRequest(Uri.parse('https://panelsystem.netlify.app/'));
+      ..loadRequest(Uri.parse('https://coder8-33-63.vercel.app/'));
   }
 
   Future<void> _launchExternalBrowser(String url) async {
@@ -92,8 +92,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 0, // Sembunyikan AppBar
-        elevation: 0, // Hilangkan shadow
+        toolbarHeight: 0, 
+        elevation: 0,
         backgroundColor: Color(0xFF8B5CF6), 
       ),
       body: WebViewWidget(controller: _controller),
