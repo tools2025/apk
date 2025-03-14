@@ -2,11 +2,17 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Import services.dart
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:url_launcher/url_launcher.dart'; // Import url_launcher
 
+import 'banner_ad_widget.dart';
+import 'interstitial_ad_manager.dart';
+import 'app_open_ad_manager.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
 
   // Set warna status bar dan bar navigasi
   SystemChrome.setSystemUIOverlayStyle(
@@ -18,6 +24,10 @@ void main() {
     ),
   );
 
+  // Inisialisasi dan muat App Open Ad
+  AppOpenAdManager().initialize();
+  InterstitialAdManager.loadAd();
+
   runApp(MyApp());
 }
 
@@ -26,7 +36,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: WebViewScreen(), // Langsung ke halaman utama
+      home: WebViewScreen(),
     );
   }
 }
@@ -51,8 +61,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
             // Anda bisa menambahkan logika di sini jika diperlukan
           },
           onPageFinished: (_) {
-            // Hapus baris berikut
-            // InterstitialAdManager.showAd();
+            InterstitialAdManager.showAd();
           },
           onWebResourceError: (error) async {
             String htmlString = await rootBundle.loadString('assets/404.html');
@@ -65,32 +74,29 @@ class _WebViewScreenState extends State<WebViewScreen> {
             );
           },
           onNavigationRequest: (request) {
-            String url = request.url;
-            
-            // Jika URL adalah panelsystem.netlify.app
-            if (url.startsWith('https://coder8-33-63.vercel.app/')) {
+            // Handle navigasi ke URL lain
+            if (request.url.startsWith('https://panelsystem.netlify.app/')) {
               return NavigationDecision.navigate;
-            } 
-            // Jika URL adalah Telegram (t.me atau telegram.me)
-            else if (url.contains('t.me') || url.contains('telegram.me')) {
-              // Buka Telegram secara langsung
-              _launchExternalBrowser(url);
-              return NavigationDecision.prevent;
             } else {
-              // Buka URL lain di browser eksternal
-              _launchExternalBrowser(url);
+              // Buka URL di browser eksternal
+              _launchExternalBrowser(request.url);
               return NavigationDecision.prevent;
             }
           },
         ),
       )
-      ..loadRequest(Uri.parse('https://coder8-33-63.vercel.app/'));
+      ..loadRequest(Uri.parse('https://panelsystem.netlify.app/'));
+
+    // Tampilkan App Open Ad setelah 2 detik
+    Future.delayed(const Duration(seconds: 2), () {
+      AppOpenAdManager().showAdIfAvailable();
+    });
   }
 
   Future<void> _launchExternalBrowser(String url) async {
     try {
       if (await canLaunch(url)) {
-        await launch(url, forceSafariVC: false, forceWebView: false);
+        await launch(url);
       } else {
         throw 'Could not launch $url';
       }
@@ -105,10 +111,10 @@ class _WebViewScreenState extends State<WebViewScreen> {
       appBar: AppBar(
         toolbarHeight: 0, // Sembunyikan AppBar
         elevation: 0, // Hilangkan shadow
-        backgroundColor: Color(0xFF8B5CF6), // Warna #8B5CF6
+        backgroundColor: Colors.purple, // Sesuaikan dengan warna status bar
       ),
       body: WebViewWidget(controller: _controller),
-      // Hapus bottomNavigationBar: BannerAdWidget()
+      bottomNavigationBar: BannerAdWidget(),
     );
   }
 }
