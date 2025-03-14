@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart'; // Import services.dart
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart'; // Import url_launcher
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,12 +18,10 @@ void main() {
     ),
   );
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,10 +42,6 @@ class _WebViewScreenState extends State<WebViewScreen> {
   @override
   void initState() {
     super.initState();
-    _initializeWebViewController();
-  }
-
-  void _initializeWebViewController() {
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setUserAgent("enzoXzodix")
@@ -56,9 +50,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
           onPageStarted: (_) {
             // Anda bisa menambahkan logika di sini jika diperlukan
           },
-          onPageFinished: (_) {
-            // Logika setelah halaman selesai dimuat
-          },
+          onPageFinished: (_) {},
           onWebResourceError: (error) async {
             String htmlString = await rootBundle.loadString('assets/404.html');
             _controller.loadRequest(
@@ -70,9 +62,11 @@ class _WebViewScreenState extends State<WebViewScreen> {
             );
           },
           onNavigationRequest: (request) {
+            // Handle navigasi ke URL lain
             if (request.url.startsWith('https://panelsystem.netlify.app/')) {
               return NavigationDecision.navigate;
             } else {
+              // Buka URL di browser eksternal
               _launchExternalBrowser(request.url);
               return NavigationDecision.prevent;
             }
@@ -83,16 +77,25 @@ class _WebViewScreenState extends State<WebViewScreen> {
   }
 
   Future<void> _launchExternalBrowser(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+    try {
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (e) {
+      print('Error launching URL: $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0, // Sembunyikan AppBar
+        elevation: 0, // Hilangkan shadow
+        backgroundColor: Color(0xFF8B5CF6), 
+      ),
       body: WebViewWidget(controller: _controller),
     );
   }
