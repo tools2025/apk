@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Import services.dart
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:url_launcher/url_launcher.dart'; 
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,9 +11,9 @@ void main() {
   // Set warna status bar dan bar navigasi
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarColor: Color(0xFF8B5CF6), 
-      statusBarIconBrightness: Brightness.light, 
-      systemNavigationBarColor: Colors.white, 
+      statusBarColor: Color(0xFF8B5CF6),
+      statusBarIconBrightness: Brightness.light,
+      systemNavigationBarColor: Colors.white,
       systemNavigationBarIconBrightness: Brightness.dark,
     ),
   );
@@ -52,14 +52,21 @@ class _WebViewScreenState extends State<WebViewScreen> {
           },
           onPageFinished: (_) {},
           onWebResourceError: (error) async {
-            String htmlString = await rootBundle.loadString('assets/404.html');
-            _controller.loadRequest(
-              Uri.dataFromString(
-                htmlString,
-                mimeType: 'text/html',
-                encoding: Encoding.getByName('utf-8'),
-              ),
-            );
+            // Check the error code and handle accordingly
+            if (error.errorCode == -2) {
+              // Network error, load the 404 page
+              String htmlString = await rootBundle.loadString('assets/404.html');
+              _controller.loadRequest(
+                Uri.dataFromString(
+                  htmlString,
+                  mimeType: 'text/html',
+                  encoding: Encoding.getByName('utf-8'),
+                ),
+              );
+            } else {
+              // Display a generic error or retry logic
+              print('Webview error: ${error.description}');
+            }
           },
           onNavigationRequest: (request) {
             // Handle navigasi ke URL lain
@@ -92,9 +99,9 @@ class _WebViewScreenState extends State<WebViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 0, 
+        toolbarHeight: 0,
         elevation: 0,
-        backgroundColor: Color(0xFF8B5CF6), 
+        backgroundColor: Color(0xFF8B5CF6),
       ),
       body: WebViewWidget(controller: _controller),
     );
