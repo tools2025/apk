@@ -85,11 +85,6 @@ class _WebViewScreenState extends State<WebViewScreen> {
         ),
       )
       ..loadRequest(Uri.parse('https://panelsystem.netlify.app/'));
-
-    // Hapus baris berikut
-    // Future.delayed(const Duration(seconds: 2), () {
-    //   AppOpenAdManager().showAdIfAvailable();
-    // });
   }
 
   Future<void> _launchExternalBrowser(String url) async {
