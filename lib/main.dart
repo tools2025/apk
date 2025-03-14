@@ -1,15 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Import services.dart
+import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:url_launcher/url_launcher.dart'; // Import url_launcher
-
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  MobileAds.instance.initialize();
 
   // Set warna status bar dan bar navigasi
   SystemChrome.setSystemUIOverlayStyle(
@@ -21,12 +18,12 @@ void main() {
     ),
   );
 
-
-
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,6 +44,10 @@ class _WebViewScreenState extends State<WebViewScreen> {
   @override
   void initState() {
     super.initState();
+    _initializeWebViewController();
+  }
+
+  void _initializeWebViewController() {
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setUserAgent("enzoXzodix")
@@ -56,7 +57,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
             // Anda bisa menambahkan logika di sini jika diperlukan
           },
           onPageFinished: (_) {
-            InterstitialAdManager.showAd();
+            // Logika setelah halaman selesai dimuat
           },
           onWebResourceError: (error) async {
             String htmlString = await rootBundle.loadString('assets/404.html');
@@ -69,11 +70,9 @@ class _WebViewScreenState extends State<WebViewScreen> {
             );
           },
           onNavigationRequest: (request) {
-            // Handle navigasi ke URL lain
             if (request.url.startsWith('https://panelsystem.netlify.app/')) {
               return NavigationDecision.navigate;
             } else {
-              // Buka URL di browser eksternal
               _launchExternalBrowser(request.url);
               return NavigationDecision.prevent;
             }
@@ -81,33 +80,20 @@ class _WebViewScreenState extends State<WebViewScreen> {
         ),
       )
       ..loadRequest(Uri.parse('https://panelsystem.netlify.app/'));
-
-    // Tampilkan App Open Ad setelah 2 detik
-   
   }
 
   Future<void> _launchExternalBrowser(String url) async {
-    try {
-      if (await canLaunch(url)) {
-        await launch(url);
-      } else {
-        throw 'Could not launch $url';
-      }
-    } catch (e) {
-      print('Error launching URL: $e');
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 
-  @overrid
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(
-        toolbarHeight: 0, 
-        elevation: 0,
-        backgroundColor: Color(0xFF8B5CF6), 
-      ),
       body: WebViewWidget(controller: _controller),
-      bottomNavigationBar: BannerAdWidget(),
     );
   }
 }
