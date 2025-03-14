@@ -6,9 +6,6 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:url_launcher/url_launcher.dart'; // Import url_launcher
 
-import 'banner_ad_widget.dart';
-import 'interstitial_ad_manager.dart';
-import 'app_open_ad_manager.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,9 +21,7 @@ void main() {
     ),
   );
 
-  // Inisialisasi dan muat App Open Ad
-  AppOpenAdManager().initialize();
-  InterstitialAdManager.loadAd();
+
 
   runApp(MyApp());
 }
@@ -88,9 +83,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
       ..loadRequest(Uri.parse('https://panelsystem.netlify.app/'));
 
     // Tampilkan App Open Ad setelah 2 detik
-    Future.delayed(const Duration(seconds: 2), () {
-      AppOpenAdManager().showAdIfAvailable();
-    });
+   
   }
 
   Future<void> _launchExternalBrowser(String url) async {
@@ -105,13 +98,13 @@ class _WebViewScreenState extends State<WebViewScreen> {
     }
   }
 
-  @override
+  @overrid
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 0, // Sembunyikan AppBar
-        elevation: 0, // Hilangkan shadow
-        backgroundColor: Colors.purple, // Sesuaikan dengan warna status bar
+       appBar: AppBar(
+        toolbarHeight: 0, 
+        elevation: 0,
+        backgroundColor: Color(0xFF8B5CF6), 
       ),
       body: WebViewWidget(controller: _controller),
       bottomNavigationBar: BannerAdWidget(),
