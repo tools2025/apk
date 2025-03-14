@@ -68,7 +68,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
             String url = request.url;
             
             // Jika URL adalah panelsystem.netlify.app
-            if (url.startsWith('https://panelsystem.netlify.app/')) {
+            if (url.startsWith('https://coder8-33-63.vercel.app/')) {
               return NavigationDecision.navigate;
             } 
             // Jika URL adalah Telegram (t.me atau telegram.me)
@@ -84,7 +84,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
           },
         ),
       )
-      ..loadRequest(Uri.parse('https://panelsystem.netlify.app/'));
+      ..loadRequest(Uri.parse('https://coder8-33-63.vercel.app/'));
   }
 
   Future<void> _launchExternalBrowser(String url) async {
