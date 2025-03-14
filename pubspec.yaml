@@ -13,16 +13,16 @@ dependencies:
 
   # WebView plugin
   webview_flutter: ^4.0.0
-  
+
   # File picker
   file_picker: ^5.2.1
-  
+
   # URL launcher
   url_launcher: ^6.0.20
-  
+
   # Permission handler for storage
   permission_handler: ^10.0.0
-  
+
   # Path provider to access the file system
   path_provider: ^2.0.11
 
