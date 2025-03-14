@@ -37,11 +37,6 @@ class WebViewScreen extends StatefulWidget {
   _WebViewScreenState createState() => _WebViewScreenState();
 }
 
-class WebViewScreen extends StatefulWidget {
-  @override
-  _WebViewScreenState createState() => _WebViewScreenState();
-}
-
 class _WebViewScreenState extends State<WebViewScreen> {
   late WebViewController _controller;
   final FileDownloader _fileDownloader = FileDownloader(); // Buat instance FileDownloader
