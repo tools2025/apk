@@ -36,3 +36,10 @@ flutter:
 
   assets:
     - assets/404.html  # Ensure this file exists in the `assets` directory
+
+  # Android-specific configuration
+  platform_specific:
+    android:
+      file_picker:
+        version: ^5.2.1
+    # You can leave out other platforms like iOS, Linux, macOS, Windows
