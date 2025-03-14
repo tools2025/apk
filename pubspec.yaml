@@ -1,6 +1,6 @@
 name: webview_app
 description: "A simple Flutter WebView App with Ads and Offline Support."
-publish_to: 'none'  # Hapus ini jika Anda ingin mempublikasikan ke pub.dev
+publish_to: 'none'  # Hapus ini jika ingin mempublikasikan ke pub.dev
 
 version: 1.0.0+1
 
@@ -10,21 +10,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  url_launcher: ^6.2.3  # Pastikan indentasi sejajar dengan dependensi lainnya
-
-  # WebView dan plugin pendukung
+  url_launcher: ^6.2.3  
   webview_flutter: ^4.7.0
   webview_flutter_android: ^3.10.0
   webview_flutter_wkwebview: ^3.10.0
-
-  # Google AdMob
   google_mobile_ads: ^4.0.0
-
-  # Cek koneksi internet
   connectivity_plus: ^6.0.3
-
-  # Splash screen (opsional)
   flutter_native_splash: ^2.3.11
+  path_provider: ^2.1.1
+  permission_handler: ^11.0.1
+  flutter_file_dialog: ^3.0.0
 
 dev_dependencies:
   flutter_test:
