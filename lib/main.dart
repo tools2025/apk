@@ -1,3 +1,4 @@
+import 'dart:io'; // Tambahkan ini untuk Platform, Directory, dan File
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class WebViewScreen extends StatefulWidget {
 }
 
 class _WebViewScreenState extends State<WebViewScreen> {
-  late WebViewController _controller;
+  late final WebViewController _controller;
 
   @override
   void initState() {
@@ -74,8 +75,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
   }
 
   Future<void> _launchExternalBrowser(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
     } else {
       print('Could not launch $url');
     }
@@ -127,7 +128,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
     if (downloadsDir == null) return;
 
     String downloadsPath = "${downloadsDir.path}/DECODE";
-    Directory(downloadsDir).createSync(recursive: true);
+    downloadsDir.createSync(recursive: true); // Perbaiki cara membuat folder
 
     File file = File("$downloadsPath/$fileName");
     await file.writeAsBytes(data);
@@ -152,7 +153,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
             right: 20,
             child: FloatingActionButton(
               onPressed: () async {
-                Uint8List data = utf8.encode("Sample text file");
+                Uint8List data = Uint8List.fromList(utf8.encode("Sample text file"));
                 _promptUserForFileName(context, data, "text/plain");
               },
               child: Icon(Icons.save),
