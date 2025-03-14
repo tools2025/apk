@@ -4,7 +4,7 @@ import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import io.flutter.Log;
 import io.flutter.embedding.engine.FlutterEngine;
-import io.flutter.plugins.filepicker.FilePickerPlugin;  // Import file_picker plugin
+import io.flutter.plugins.filepicker.FilePickerPlugin;  // Correct import for file_picker plugin
 
 /**
  * Generated file. Do not edit.
@@ -37,8 +37,8 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin webview_flutter_android, io.flutter.plugins.webviewflutter.WebViewFlutterPlugin", e);
     }
     try {
-      // Add the file_picker plugin here
-      flutterEngine.getPlugins().add(new io.flutter.plugins.filepicker.FilePickerPlugin());
+      // Registering file_picker plugin
+      flutterEngine.getPlugins().add(new FilePickerPlugin());  // Corrected registration
     } catch (Exception e) {
       Log.e(TAG, "Error registering plugin file_picker, io.flutter.plugins.filepicker.FilePickerPlugin", e);
     }
