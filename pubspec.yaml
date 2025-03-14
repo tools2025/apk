@@ -1,6 +1,6 @@
 name: webview_app
-description: "A simple Flutter WebView App with file picker, storage access, and offline support."
-publish_to: 'none'  # Remove this line if you plan to publish the package to pub.dev
+description: "A simple Flutter WebView App with Ads and Offline Support."
+publish_to: 'none'  # Hapus ini jika Anda ingin mempublikasikan ke pub.dev
 
 version: 1.0.0+1
 
@@ -10,21 +10,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  url_launcher: ^6.2.3  # Pastikan indentasi sejajar dengan dependensi lainnya
 
-  # WebView plugin
-  webview_flutter: ^4.0.0
-  
-  # File picker (only for Android)
-  file_picker: ^5.2.1
-  
-  # URL launcher
-  url_launcher: ^6.0.20
-  
-  # Permission handler for storage (Android)
-  permission_handler: ^10.0.0
-  
-  # Path provider to access the file system (Android)
-  path_provider: ^2.0.11
+  # WebView dan plugin pendukung
+  webview_flutter: ^4.7.0
+  webview_flutter_android: ^3.10.0
+  webview_flutter_wkwebview: ^3.10.0
+
+  # Cek koneksi internet
+  connectivity_plus: ^6.0.3
 
 dev_dependencies:
   flutter_test:
@@ -35,4 +29,4 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/404.html  # Ensure this file exists in the `assets` directory
+    - assets/404.html  # Pastikan file ini ada di folder `assets`
