@@ -164,7 +164,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
       body: WebViewWidget(controller: _controller),
       floatingActionButton: FloatingActionButton(
         onPressed: _pickFile, // Trigger file picker
-        child: Icon(Icons.file_present),
+        child: ImageIcon(AssetImage('assets/icon.png')),
+
       ),
     );
   }
