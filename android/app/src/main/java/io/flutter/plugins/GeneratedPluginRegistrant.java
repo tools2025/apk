@@ -3,8 +3,8 @@ package io.flutter.plugins;
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import io.flutter.Log;
+
 import io.flutter.embedding.engine.FlutterEngine;
-import io.flutter.plugins.filepicker.FilePickerPlugin;  // Correct import for file_picker plugin
 
 /**
  * Generated file. Do not edit.
@@ -14,7 +14,6 @@ import io.flutter.plugins.filepicker.FilePickerPlugin;  // Correct import for fi
 @Keep
 public final class GeneratedPluginRegistrant {
   private static final String TAG = "GeneratedPluginRegistrant";
-
   public static void registerWith(@NonNull FlutterEngine flutterEngine) {
     try {
       flutterEngine.getPlugins().add(new dev.fluttercommunity.plus.connectivity.ConnectivityPlugin());
@@ -26,7 +25,7 @@ public final class GeneratedPluginRegistrant {
     } catch (Exception e) {
       Log.e(TAG, "Error registering plugin flutter_native_splash, net.jonhanson.flutter_native_splash.FlutterNativeSplashPlugin", e);
     }
-    try { 
+    try {
       flutterEngine.getPlugins().add(new io.flutter.plugins.googlemobileads.GoogleMobileAdsPlugin());
     } catch (Exception e) {
       Log.e(TAG, "Error registering plugin google_mobile_ads, io.flutter.plugins.googlemobileads.GoogleMobileAdsPlugin", e);
@@ -35,12 +34,6 @@ public final class GeneratedPluginRegistrant {
       flutterEngine.getPlugins().add(new io.flutter.plugins.webviewflutter.WebViewFlutterPlugin());
     } catch (Exception e) {
       Log.e(TAG, "Error registering plugin webview_flutter_android, io.flutter.plugins.webviewflutter.WebViewFlutterPlugin", e);
-    }
-    try {
-      // Registering file_picker plugin
-      flutterEngine.getPlugins().add(new FilePickerPlugin());  // Corrected registration
-    } catch (Exception e) {
-      Log.e(TAG, "Error registering plugin file_picker, io.flutter.plugins.filepicker.FilePickerPlugin", e);
     }
   }
 }
